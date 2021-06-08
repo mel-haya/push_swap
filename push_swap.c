@@ -11,20 +11,25 @@ t_stack *fill_stack(int c,char **v,int multi)
     i = 0;
     while(i < s->tail)
     {
-        s->table[i] = ft_atoi(v[i + 1]) * multi;
+        s->table[i] = ft_atoi(v[c - i - 1]) * multi;
         i++; 
     }
+    s->tail--;
+    s->name = c;
     return s;
 }
 
 void print_stack(t_stack *stack)
 {
     int i = 0;
-    while(i < stack->tail)
+    if(stack->tail >= 0)
     {
-        printf("%d - ",stack->table[i]);
-        i++;
-    }
+        while(i <= stack->tail)
+        {
+            printf("%d - ",stack->table[i]);
+            i++;
+        }
+    } 
     printf("\n");
 }
 
@@ -33,21 +38,21 @@ void swap_stack(t_stack *stack_a)
     int tmp;
     if(stack_a->tail <= 1)
         return ;
-    tmp = stack_a->table[0];
-    stack_a->table[0] = stack_a->table[1];
-    stack_a->table[1] = tmp;
+    tmp = stack_a->table[stack_a->tail];
+    stack_a->table[stack_a->tail] = stack_a->table[stack_a->tail - 1];
+    stack_a->table[stack_a->tail - 1] = tmp;
     return;
 }
 
 void push_stack(t_stack *a, t_stack *b)
 {
     int last;
-    if(a->tail == 0)
+    if(b->tail < 0)
         return;
-    last = a->table[a->tail - 1 ];
-    a->tail--;
-    b->table[b->tail] = last;
-    b->tail++;
+    last = b->table[b->tail];
+    b->tail--;
+    a->tail++;
+    a->table[a->tail] = last; 
 }
 
 void rotate_stack(t_stack *a)
@@ -56,7 +61,7 @@ void rotate_stack(t_stack *a)
     if(a->tail < 2)
         return;
     i = a->tail;
-    last = a->table[a->tail - 1];
+    last = a->table[a->tail];
     while(i > 0)
     {
         a->table[i] = a->table[i - 1];
@@ -77,7 +82,7 @@ void rr_stack(t_stack *a)
         a->table[i] = a->table[i + 1];
         i++;
     }
-    a->table[a->tail - 1] = first;
+    a->table[a->tail] = first;
 }
 
 int main(int c,char **v)
@@ -87,9 +92,13 @@ int main(int c,char **v)
     stack_a = fill_stack(c, v, 1);
     stack_b = fill_stack(c, v, 0);
 
-    rr_stack(stack_a);
-
+    //rr_stack(stack_a);
+    //sort_small_stack(stack_a);
+    //pop_by_index(stack_a, 2);
+    sort_five(stack_a,stack_b);
+    //push_stack(stack_b,stack_a);
     print_stack(stack_a);
     print_stack(stack_b);
+    //print_stack(stack_b);
 
 }
