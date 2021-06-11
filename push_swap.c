@@ -70,6 +70,8 @@ void rotate_stack(t_stack *a)
     a->table[0] = last;
 }
 
+
+
 void rr_stack(t_stack *a)
 {
     int first, i;
@@ -90,15 +92,18 @@ int main(int c,char **v)
     t_stack *stack_a,*stack_b;
 
     stack_a = fill_stack(c, v, 1);
-    stack_b = fill_stack(c, v, 0);
+    //stack_b = fill_stack(c, v, 0);
 
     //rr_stack(stack_a);
     //sort_small_stack(stack_a);
     //pop_by_index(stack_a, 2);
-    sort_five(stack_a,stack_b);
+    //sort_on_same_stack(stack_a);
     //push_stack(stack_b,stack_a);
+    // print_stack(stack_a);
     print_stack(stack_a);
-    print_stack(stack_b);
-    //print_stack(stack_b);
+    simplify_array(stack_a);
+    // print_stack(stack_b);
+    print_stack(stack_a);
 
 }
+
