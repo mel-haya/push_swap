@@ -9,13 +9,13 @@ void s(t_stack *a,t_stack *b)
         printf("ss\n");
         return;
     }
-    printf("s%c\n",a->name);
+    printf("s%s\n",a->name);
 }
 
 void p(t_stack *a,t_stack *b)
 {
     push_stack(a, b);
-    printf("p%c\n",a->name);
+    printf("p%s\n",a->name);
 }
 
 void r(t_stack *a,t_stack *b)
@@ -27,7 +27,7 @@ void r(t_stack *a,t_stack *b)
         printf("rr\n");
         return;
     }
-    printf("r%c\n",a->name);
+    printf("r%s\n",a->name);
 }
 void rr(t_stack *a,t_stack *b)
 {
@@ -38,7 +38,7 @@ void rr(t_stack *a,t_stack *b)
         printf("rrr\n");
         return;
     }
-    printf("rr%c\n",a->name);
+    printf("rr%s\n",a->name);
 }
 
 void sort_small_stack(t_stack *a)
@@ -149,14 +149,40 @@ void simplify_array(t_stack *s)
     s->table = new;
 }
 
-void sort_on_same_stack(t_stack *a)
+void push_to_b(t_stack *a,t_stack *b)
 {
-    while(!issorted(a))
+    int i,s,multi;
+
+    if(a->tail > 150)
+        s = a->tail / 12;
+    else
+        s = a->tail / 6;
+    multi = 1;
+    while(a->tail >= 0)
     {
-        if(a->table[a->tail] < a->table[a->tail - 1])
-            s(a,NULL);
-        r(a,NULL);
+        i = 0;
+        while(i <= a->tail)
+        {  
+            if(a->table[a->tail] < (s * multi))
+            {
+                //printf("%d < %d ",a->table[a->tail], (s*multi));
+                p(b,a);
+            }
+            else
+                r(a,NULL);
+            i++;
+        }
+        multi++;
     }
+
+}
+
+int get_largest_pos()
+
+
+void sort_big_stack(t_stack *a,t_stack *b)
+{
+    push_to_b(a,b); 
 }
 
 // offset

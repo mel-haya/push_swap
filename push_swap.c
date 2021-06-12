@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-t_stack *fill_stack(int c,char **v,int multi)
+t_stack *fill_stack(int c,char **v,int multi,char *name)
 {
     t_stack *s;
     int i;
@@ -15,13 +15,14 @@ t_stack *fill_stack(int c,char **v,int multi)
         i++; 
     }
     s->tail--;
-    s->name = c;
+    s->name = name;
     return s;
 }
 
 void print_stack(t_stack *stack)
 {
     int i = 0;
+    printf("%s ->",stack->name);
     if(stack->tail >= 0)
     {
         while(i <= stack->tail)
@@ -91,8 +92,8 @@ int main(int c,char **v)
 {
     t_stack *stack_a,*stack_b;
 
-    stack_a = fill_stack(c, v, 1);
-    //stack_b = fill_stack(c, v, 0);
+    stack_a = fill_stack(c, v, 1,"a");
+    stack_b = fill_stack(c, v, 0,"b");
 
     //rr_stack(stack_a);
     //sort_small_stack(stack_a);
@@ -100,10 +101,13 @@ int main(int c,char **v)
     //sort_on_same_stack(stack_a);
     //push_stack(stack_b,stack_a);
     // print_stack(stack_a);
-    print_stack(stack_a);
+    //print_stack(stack_a);
     simplify_array(stack_a);
-    // print_stack(stack_b);
-    print_stack(stack_a);
+    //print_stack(stack_a);
+    sort_big_stack(stack_a,stack_b);
+    print_stack(stack_b);
+    //print_stack(stack_a);
+    //print_stack(stack_b);
 
 }
 
