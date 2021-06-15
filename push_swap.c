@@ -37,7 +37,7 @@ void print_stack(t_stack *stack)
 void swap_stack(t_stack *stack_a)
 {
     int tmp;
-    if(stack_a->tail <= 1)
+    if(stack_a->tail < 1)
         return ;
     tmp = stack_a->table[stack_a->tail];
     stack_a->table[stack_a->tail] = stack_a->table[stack_a->tail - 1];
@@ -59,7 +59,7 @@ void push_stack(t_stack *a, t_stack *b)
 void rotate_stack(t_stack *a)
 {
     int last, i;
-    if(a->tail < 2)
+    if(a->tail < 1)
         return;
     i = a->tail;
     last = a->table[a->tail];
@@ -76,7 +76,7 @@ void rotate_stack(t_stack *a)
 void rr_stack(t_stack *a)
 {
     int first, i;
-    if(a->tail < 2)
+    if(a->tail < 1)
         return;
     i = 0;
     first = a->table[0];
@@ -104,10 +104,11 @@ int main(int c,char **v)
     //print_stack(stack_a);
     simplify_array(stack_a);
     //print_stack(stack_a);
+    //print_stack(stack_b);
     sort_big_stack(stack_a,stack_b);
-    print_stack(stack_b);
     //print_stack(stack_a);
     //print_stack(stack_b);
+    //printf("%s",v[1]);
 
 }
 

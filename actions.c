@@ -149,9 +149,36 @@ void simplify_array(t_stack *s)
     s->table = new;
 }
 
+// void push_to_b(t_stack *a,t_stack *b)
+// {
+//     int i,s,multi,size;
+
+//     if(a->tail > 150)
+//         s = a->tail / 12;
+//     else
+//         s = a->tail / 7;
+//     multi = 1;
+//     while(a->tail >= 0)
+//     {
+//         i = 0;
+//         size = a->tail;
+//         while(i <= size)
+//         {  
+//             if(a->table[a->tail] < (s * multi))
+//                 p(b,a);
+//             else
+//                 r(a,NULL);
+//             i++;
+//         }
+//         multi++;
+//     }
+// }
+
 void push_to_b(t_stack *a,t_stack *b)
 {
-    int i,s,multi;
+    int i,s,multi,size,midpoint;
+
+    midpoint = a->tail / 2;
 
     if(a->tail > 150)
         s = a->tail / 12;
@@ -161,11 +188,18 @@ void push_to_b(t_stack *a,t_stack *b)
     while(a->tail >= 0)
     {
         i = 0;
-        while(i <= a->tail)
+        size = a->tail;
+        while(i <= size)
         {  
-            if(a->table[a->tail] < (s * multi))
+            if(a->table[a->tail] >= (midpoint - (s * multi)) 
+            && a->table[a->tail] < midpoint)
             {
-                //printf("%d < %d ",a->table[a->tail], (s*multi));
+                p(b,a);
+                r(b,NULL);
+            }
+            else if(a->table[a->tail] <= (midpoint + (s * multi)) 
+            && a->table[a->tail] >= midpoint)
+            {
                 p(b,a);
             }
             else
@@ -174,15 +208,80 @@ void push_to_b(t_stack *a,t_stack *b)
         }
         multi++;
     }
-
 }
 
-int get_largest_pos()
 
+int get_largest_pos(t_stack *a)
+{
+    int i,largest;
+
+    i = 0;
+    largest = 0;
+    while(i <= a->tail)
+    {
+        if(a->table[i] > a->table[largest])
+            largest = i;
+        i++;
+    }
+    return largest;
+}
+
+void push_largest_left(t_stack *b,t_stack *a,int pos)
+{
+    int largest,flag;
+
+    largest = b->table[pos];
+    while(1)
+    {
+        if(b->table[b->tail] == largest)
+        {
+            p(a,b);
+            break;
+        }
+        else if(b->table[b->tail] == largest - 1)
+            p(a,b);
+        else
+        {
+            r(b ,NULL);
+        }
+    }
+}
+
+void push_largest_right(t_stack *b,t_stack *a,int pos)
+{
+    int largest = b->table[pos];
+    while(1)
+    {
+        if(b->table[b->tail] == largest)
+        {
+            p(a,b);
+            break;
+        }
+        else if(b->table[b->tail] == largest - 1)
+              p(a,b);
+        else
+        {
+            rr(b ,NULL);
+        }
+    }
+}
 
 void sort_big_stack(t_stack *a,t_stack *b)
 {
-    push_to_b(a,b); 
+    int pos;
+
+    push_to_b(a,b);
+    while(b->tail >= 0)
+    {
+        pos = get_largest_pos(b);
+        if(pos >= b->tail / 2)
+            push_largest_left(b,a,pos);
+        else if(pos < b->tail / 2)
+            push_largest_right(b,a,pos);
+        if(a->table[a->tail] > a->table[a->tail - 1])
+            s(a,NULL);
+    }
+
 }
 
 // offset

@@ -25,3 +25,4 @@ void print_stack(t_stack *stack);
 void sort_on_same_stack(t_stack *a);
 void simplify_array(t_stack *s);
 void sort_big_stack(t_stack *a,t_stack *b);
+void print_stack(t_stack *stack);
