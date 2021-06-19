@@ -1,114 +1,56 @@
 #include "push_swap.h"
 
-t_stack *fill_stack(int c,char **v,int multi,char *name)
+void	sort_medium(t_stack *a, t_stack *b)
 {
-    t_stack *s;
-    int i;
-
-    s = malloc(sizeof(t_stack));
-    s->table = malloc(sizeof(int) * (c - 1));
-    s->tail = (c - 1) * multi;
-    i = 0;
-    while(i < s->tail)
-    {
-        s->table[i] = ft_atoi(v[c - i - 1]) * multi;
-        i++; 
-    }
-    s->tail--;
-    s->name = name;
-    return s;
+	while (a->tail > 2)
+	{
+		pop_by_index(a, get_smallest(a));
+		p(b, a);
+	}
+	sort_small_stack(a);
+	while (b->tail >= 0)
+	{
+		p(a, b);
+	}
 }
 
-void print_stack(t_stack *stack)
+void	sort_big_stack(t_stack *a, t_stack *b)
 {
-    int i = 0;
-    printf("%s ->",stack->name);
-    if(stack->tail >= 0)
-    {
-        while(i <= stack->tail)
-        {
-            printf("%d - ",stack->table[i]);
-            i++;
-        }
-    } 
-    printf("\n");
+	int	pos;
+
+	push_to_b(a, b);
+	while (b->tail >= 0)
+	{
+		pos = get_largest_pos(b);
+		if (pos >= b->tail / 2)
+			push_largest_left(b, a, pos);
+		else if (pos < b->tail / 2)
+			push_largest_right(b, a, pos);
+		if (a->table[a->tail] > a->table[a->tail - 1])
+			s(a, NULL);
+		if (a->table[0] < a->table[1])
+			rr(a, NULL);
+	}
 }
 
-void swap_stack(t_stack *stack_a)
+int	main(int c, char **v)
 {
-    int tmp;
-    if(stack_a->tail < 1)
-        return ;
-    tmp = stack_a->table[stack_a->tail];
-    stack_a->table[stack_a->tail] = stack_a->table[stack_a->tail - 1];
-    stack_a->table[stack_a->tail - 1] = tmp;
-    return;
+	t_stack	*stack_a;
+	t_stack	*stack_b;
+
+	stack_a = fill_stack(c, v, 1, "a");
+	stack_b = fill_stack(c, v, 0, "b");
+	if (issorted(stack_a))
+		return (0);
+	if (!check_stack(stack_a))
+	{
+		printf("ERROR\n");
+		return (0);
+	}
+	if (stack_a->tail < 10)
+	{
+		sort_medium(stack_a, stack_b);
+		return (0);
+	}
+	sort_big_stack(stack_a, stack_b);
 }
-
-void push_stack(t_stack *a, t_stack *b)
-{
-    int last;
-    if(b->tail < 0)
-        return;
-    last = b->table[b->tail];
-    b->tail--;
-    a->tail++;
-    a->table[a->tail] = last; 
-}
-
-void rotate_stack(t_stack *a)
-{
-    int last, i;
-    if(a->tail < 1)
-        return;
-    i = a->tail;
-    last = a->table[a->tail];
-    while(i > 0)
-    {
-        a->table[i] = a->table[i - 1];
-        i--;
-    }
-    a->table[0] = last;
-}
-
-
-
-void rr_stack(t_stack *a)
-{
-    int first, i;
-    if(a->tail < 1)
-        return;
-    i = 0;
-    first = a->table[0];
-    while(i < a->tail)
-    {
-        a->table[i] = a->table[i + 1];
-        i++;
-    }
-    a->table[a->tail] = first;
-}
-
-int main(int c,char **v)
-{
-    t_stack *stack_a,*stack_b;
-
-    stack_a = fill_stack(c, v, 1,"a");
-    stack_b = fill_stack(c, v, 0,"b");
-
-    //rr_stack(stack_a);
-    //sort_small_stack(stack_a);
-    //pop_by_index(stack_a, 2);
-    //sort_on_same_stack(stack_a);
-    //push_stack(stack_b,stack_a);
-    // print_stack(stack_a);
-    //print_stack(stack_a);
-    simplify_array(stack_a);
-    //print_stack(stack_a);
-    //print_stack(stack_b);
-    sort_big_stack(stack_a,stack_b);
-    //print_stack(stack_a);
-    //print_stack(stack_b);
-    //printf("%s",v[1]);
-
-}
-

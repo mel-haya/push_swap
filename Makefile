@@ -1,9 +1,7 @@
 
 
-NAME = libft.a
 
-all:$(NAME)
-	gcc push_swap.c actions.c libft/libft.a -g -o push_swap
-	
-$(NAME): 
-	$(MAKE) -C libft/
+
+all:
+	gcc push_swap.c sorting_utils.c sorting_utils1.c actions.c ft_atoi.c ft_putstr_fd.c ft_putchar_fd.c actions1.c parsing.c -g -o push_swap
+
