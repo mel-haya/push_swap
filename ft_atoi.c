@@ -1,3 +1,5 @@
+#include "push_swap.h"
+
 int	ft_atoi(const char *str)
 {
 	long	output;
@@ -20,6 +22,8 @@ int	ft_atoi(const char *str)
 	{
 		j = str[i] - '0';
 		output = output * 10 + j;
+		if (output > INT_MAX || output < INT_MIN)
+			return (-1);
 		i++;
 	}
 	return (output * sign);

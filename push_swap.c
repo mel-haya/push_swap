@@ -33,6 +33,14 @@ void	sort_big_stack(t_stack *a, t_stack *b)
 	}
 }
 
+void	free_stacks(t_stack *a, t_stack *b)
+{
+	free(a->table);
+	free(b->table);
+	free(a);
+	free(b);
+}
+
 int	main(int c, char **v)
 {
 	t_stack	*stack_a;
@@ -40,17 +48,18 @@ int	main(int c, char **v)
 
 	stack_a = fill_stack(c, v, 1, "a");
 	stack_b = fill_stack(c, v, 0, "b");
-	if (issorted(stack_a))
-		return (0);
 	if (!check_stack(stack_a))
 	{
 		printf("ERROR\n");
 		return (0);
 	}
+	if (issorted(stack_a))
+		return (0);
 	if (stack_a->tail < 10)
 	{
 		sort_medium(stack_a, stack_b);
 		return (0);
 	}
 	sort_big_stack(stack_a, stack_b);
+	free_stacks(stack_a, stack_b);
 }

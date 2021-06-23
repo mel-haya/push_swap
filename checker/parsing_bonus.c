@@ -1,4 +1,4 @@
-#include "push_swap.h"
+#include "checker.h"
 
 int	issorted(t_stack *a)
 {
