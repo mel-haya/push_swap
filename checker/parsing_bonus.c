@@ -39,7 +39,11 @@ t_stack	*init_stack(int c, int multi, char *name)
 	t_stack	*s;
 
 	s = malloc(sizeof(t_stack));
+	if (!s)
+		return (NULL);
 	s->table = malloc(sizeof(int) * (c - 1));
+	if (!s->table)
+		return (NULL);
 	s->tail = (c - 1) * multi;
 	s->name = name;
 	return (s);
@@ -52,6 +56,8 @@ t_stack	*fill_stack(int c, char **v, int multi, char *name)
 
 	s = init_stack(c, multi, name);
 	i = 0;
+	if (!s)
+		return (NULL);
 	while (i < s->tail)
 	{
 		if (is_number(v[c - i - 1]))
