@@ -1,7 +1,32 @@
 
+# -*- Makefile -*-
+
+NAME = push_swap
+BONUS = checker
+LFT = libft/libft.a
+FLAGS = -Wall -Werror -Wextra
+SRC = push_swap.c sorting_utils.c sorting_utils1.c actions.c actions1.c parsing.c
+BONUS_SRC = actions_bonus.c checker_bonus.c parsing_bonus.c sorting_utils_bonus.c
+O = $(SRC:.c=.o)
+
+all: $(NAME)
+
+clean:
+	$(MAKE) -C libft/ fclean
+
+fclean: clean
+	rm $(NAME)
+	rm $(BONUS)
+
+re: fclean re
+
+$(NAME):
+	$(MAKE) -C libft/
+	gcc $(SRC) $(LFT) $(FLAGS) -o $(NAME)
+
+bonus: 
+	$(MAKE) -C libft/
+	gcc $(BONUS_SRC) libft/*.o $(FLAGS) -o $(BONUS)
 
 
-
-all:
-	gcc push_swap.c sorting_utils.c sorting_utils1.c actions.c ft_atoi.c ft_putstr_fd.c ft_putchar_fd.c ft_strlen.c ft_strcmp.c actions1.c parsing.c -g -o push_swap
 
